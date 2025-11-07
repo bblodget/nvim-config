@@ -12,14 +12,16 @@ Modern Neovim configuration in Lua with Gruvbox theme and essential plugins.
 
 ## Prerequisites
 
-- **Neovim** 0.10.0+ (installed via AppImage on Linux x86_64)
+- **Neovim** 0.10.0+ (installed via AppImage on Linux x86_64, or via MSYS2 on Windows)
 - **Git** - For cloning plugins
 - **FiraCode Nerd Font** - For proper icon display (optional but recommended)
 - **curl** - For downloading neovim updates
 
 ## Installation
 
-### 1. Install Neovim (script installs for Linux x86_64)
+### Linux x86_64
+
+#### 1. Install Neovim (script installs for Linux x86_64)
 
 Run the included install script:
 
@@ -30,9 +32,7 @@ cd ~/.config/nvim
 
 This will download the latest neovim AppImage for Linux x86_64 and install it to `~/.local/bin/nvim`.
 
-**Note:** For other platforms (macOS, Windows, ARM), see the [official Neovim installation guide](https://github.com/neovim/neovim/blob/master/INSTALL.md).
-
-### 2. Clone this configuration
+#### 2. Clone this configuration
 
 **If you haven't installed Neovim yet**, clone this repo to `~/.config/nvim`:
 
@@ -49,7 +49,7 @@ cd ~/.config/nvim
 mv ~/nvim-config ~/.config/nvim
 ```
 
-### 3. Start Neovim
+#### 3. Start Neovim
 
 ```bash
 nvim
@@ -57,13 +57,73 @@ nvim
 
 On first launch, lazy.nvim will automatically install all configured plugins.
 
+### Windows (MSYS2)
+
+#### 1. Install Neovim via MSYS2
+
+In your MSYS2 UCRT64 shell:
+
+```bash
+pacman -S mingw-w64-ucrt-x86_64-neovim
+```
+
+#### 2. Clone this configuration
+
+Clone to `~/.config/nvim` (for git tracking):
+
+```bash
+git clone https://github.com/bblodget/nvim-config ~/.config/nvim
+```
+
+#### 3. Sync to Windows location
+
+On Windows, Neovim looks for config in `C:\Users\<username>\AppData\Local\nvim`. 
+Use the included sync script to copy your config there:
+
+```bash
+cd ~/.config/nvim
+./windows_sync.sh
+```
+
+#### 4. Start Neovim
+
+```bash
+nvim
+```
+
+On first launch, lazy.nvim will automatically install all configured plugins.
+
+#### Windows Workflow
+
+When working on Windows with MSYS2:
+
+1. **Edit config** in `~/.config/nvim` (this is where git tracks changes)
+2. **Run sync script** to copy to Windows location:
+   ```bash
+   ~/.config/nvim/windows_sync.sh
+   ```
+3. **Test in Neovim** - Changes will be active
+4. **Commit/push** from `~/.config/nvim` as usual
+
+The `windows_sync.sh` script copies `init.lua` and any plugin directories (`lua/`, `plugin/`, `after/`, `ftplugin/`) to the Windows AppData location while excluding git files and documentation.
+
 ## Updating Neovim
+
+### Linux
 
 To update to the latest neovim version, run the install script again:
 
 ```bash
 cd ~/.config/nvim
 ./install-update-nvim.sh
+```
+
+### Windows (MSYS2)
+
+Update via pacman:
+
+```bash
+pacman -Syu mingw-w64-ucrt-x86_64-neovim
 ```
 
 ## Configuration
@@ -102,6 +162,8 @@ Edit `~/.config/nvim/init.lua` to:
 - Adjust colorscheme settings
 - Change basic vim options
 
+**On Windows**: Remember to run `./windows_sync.sh` after making changes!
+
 ## Migrated from Vim
 
 This configuration is based on a classic vim setup with:
@@ -116,7 +178,8 @@ This configuration is based on a classic vim setup with:
 ```
 ~/.config/nvim/
 ├── init.lua                    # Main configuration file
-├── install-update-nvim.sh      # Neovim installer/updater script
+├── install-update-nvim.sh      # Neovim installer/updater script (Linux)
+├── windows_sync.sh             # Sync script for Windows/MSYS2
 ├── .gitignore                  # Git ignore rules
 └── README.md                   # This file
 ```
@@ -131,7 +194,7 @@ Run `:Lazy` and check for errors. Run `:Lazy sync` to reinstall.
 
 Install FiraCode Nerd Font and configure your terminal to use it.
 
-### Neovim not found
+### Neovim not found (Linux)
 
 Ensure `~/.local/bin` is in your PATH:
 
@@ -144,6 +207,31 @@ If not, add to your `.bashrc`:
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
 ```
+
+### Config not loading on Windows
+
+Make sure you've run `windows_sync.sh` to copy the config to the Windows location:
+
+```bash
+~/.config/nvim/windows_sync.sh
+```
+
+Verify the sync worked:
+
+```bash
+ls /c/Users/$USER/AppData/Local/nvim/
+```
+
+### `:Lazy` command not found
+
+Check where Neovim is looking for config:
+
+```vim
+:echo stdpath('config')
+:echo stdpath('data')
+```
+
+Ensure config is in the correct location for your platform.
 
 ## License
 
