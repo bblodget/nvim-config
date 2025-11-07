@@ -34,8 +34,19 @@ This will download the latest neovim AppImage for Linux x86_64 and install it to
 
 ### 2. Clone this configuration
 
+**If you haven't installed Neovim yet**, clone this repo to `~/.config/nvim`:
+
 ```bash
-git clone <your-repo-url> ~/.config/nvim
+git clone https://github.com/bblodget/nvim-config ~/.config/nvim
+cd ~/.config/nvim
+./install-update-nvim.sh
+```
+
+**If you already have the repo**, just ensure it's in the right location:
+
+```bash
+# Move/rename if needed
+mv ~/nvim-config ~/.config/nvim
 ```
 
 ### 3. Start Neovim
