@@ -1,2 +1,13 @@
+# Ignore lazy.nvim plugin directory (managed by lazy.nvim)
 lazy-lock.json
 
+# Ignore downloaded AppImages
+*.appimage
+
+# Ignore backup files
+*.backup
+*.bak
+*~
+
+# Ignore neovim runtime data (will be regenerated)
+.netrwhist
