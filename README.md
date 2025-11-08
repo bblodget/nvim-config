@@ -147,6 +147,7 @@ Currently configured plugins:
 
 1. **gruvbox.nvim** - Gruvbox colorscheme matching terminal theme
 2. **nvim-tree.lua** - File explorer with icons (replaces NERDTree)
+3. **gitsigns.nvim** - Git integration with visual indicators and operations
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -277,4 +278,32 @@ A modern file tree explorer for Neovim, replacing NERDTree.
 - Tree opens in current file's directory
 - Icons require FiraCode Nerd Font
 - Use `q` to close the tree (or `F2` to toggle)
+
+
+### Gitsigns (Git Integration)
+
+Visual git indicators and operations directly in the editor.
+
+**Visual Indicators (Sign Column):**
+- `+` - Added line
+- `~` - Modified line
+- `_` - Deleted line
+
+**Navigation:**
+- `]c` - Jump to next change (hunk)
+- `[c` - Jump to previous change (hunk)
+
+**Preview & Info:**
+- `Space + gp` - Preview hunk (shows diff in floating window)
+- `Space + gb` - Toggle git blame (shows author/commit for each line)
+
+**Staging:**
+- `Space + gs` - Stage hunk (stage this change)
+- `Space + gu` - Unstage hunk
+
+**Tips:**
+- Indicators appear automatically as you edit
+- Only shows changes compared to git HEAD
+- Works in any git repository
+- Blame info shows inline when toggled on
 

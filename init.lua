@@ -82,6 +82,23 @@ require("lazy").setup({
             })
         end,
     },
+
+    -- Gitsigns: Git integration with sign column indicators
+    {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require('gitsigns').setup({
+                signs = {
+                    add          = { text = '+' },
+                    change       = { text = '~' },
+                    delete       = { text = '_' },
+                    topdelete    = { text = '‾' },
+                    changedelete = { text = '~' },
+                },
+                current_line_blame = false,  -- Toggle with <leader>gb
+            })
+        end,
+    },
 })
 
 -- Window navigation (Ctrl+hjkl) - from vimrc.unix
@@ -94,4 +111,12 @@ vim.keymap.set('n', '<C-H>', '<C-W><C-H>', { desc = 'Move to window left' })
 vim.keymap.set('n', '<F2>', ':NvimTreeToggle<CR>', { desc = 'Toggle file tree', silent = true })
 vim.keymap.set('n', '<leader>e', ':NvimTreeFocus<CR>', { desc = 'Focus file tree', silent = true })
 
-print("Neovim config loaded! Gruvbox + nvim-tree active.")
+-- Gitsigns keybindings
+vim.keymap.set('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', { desc = 'Preview git hunk', silent = true })
+vim.keymap.set('n', '<leader>gb', ':Gitsigns toggle_current_line_blame<CR>', { desc = 'Toggle git blame', silent = true })
+vim.keymap.set('n', '<leader>gs', ':Gitsigns stage_hunk<CR>', { desc = 'Stage hunk', silent = true })
+vim.keymap.set('n', '<leader>gu', ':Gitsigns undo_stage_hunk<CR>', { desc = 'Unstage hunk', silent = true })
+vim.keymap.set('n', ']c', ':Gitsigns next_hunk<CR>', { desc = 'Next git hunk', silent = true })
+vim.keymap.set('n', '[c', ':Gitsigns prev_hunk<CR>', { desc = 'Previous git hunk', silent = true })
+
+print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns active.")
