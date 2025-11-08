@@ -99,6 +99,24 @@ require("lazy").setup({
             })
         end,
     },
+
+    -- Telescope: Fuzzy finder for files, text, and more
+    {
+        "nvim-telescope/telescope.nvim",
+        branch = '0.1.x',
+        dependencies = {
+            "nvim-lua/plenary.nvim",  -- Required dependency
+        },
+        config = function()
+            require('telescope').setup({
+                defaults = {
+                    layout_config = {
+                        horizontal = { width = 0.8 },
+                    },
+                },
+            })
+        end,
+    },
 })
 
 -- Window navigation (Ctrl+hjkl) - from vimrc.unix
@@ -119,4 +137,12 @@ vim.keymap.set('n', '<leader>gu', ':Gitsigns undo_stage_hunk<CR>', { desc = 'Uns
 vim.keymap.set('n', ']c', ':Gitsigns next_hunk<CR>', { desc = 'Next git hunk', silent = true })
 vim.keymap.set('n', '[c', ':Gitsigns prev_hunk<CR>', { desc = 'Previous git hunk', silent = true })
 
-print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns active.")
+-- Telescope keybindings
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep (search text)' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help' })
+vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Recent files' })
+
+print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns + Telescope active.")

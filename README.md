@@ -148,6 +148,7 @@ Currently configured plugins:
 1. **gruvbox.nvim** - Gruvbox colorscheme matching terminal theme
 2. **nvim-tree.lua** - File explorer with icons (replaces NERDTree)
 3. **gitsigns.nvim** - Git integration with visual indicators and operations
+4. **telescope.nvim** - Fuzzy finder for files and text search
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -306,4 +307,36 @@ Visual git indicators and operations directly in the editor.
 - Only shows changes compared to git HEAD
 - Works in any git repository
 - Blame info shows inline when toggled on
+
+
+### Telescope (Fuzzy Finder)
+
+Powerful fuzzy finder for files, text, and more. Essential for navigating large codebases.
+
+**File Finding:**
+- `Space + ff` - **Find Files** - Fuzzy search by filename
+- `Space + fr` - **Recent Files** - Browse recently opened files
+- `Space + fb` - **Find Buffers** - Switch between open files
+
+**Text Search:**
+- `Space + fg` - **Live Grep** - Search text across entire project (requires `ripgrep`)
+- `Space + fh` - **Help Tags** - Search Neovim help documentation
+
+**Using Telescope:**
+1. Press a keybinding to open finder
+2. Type to fuzzy search (doesn't need exact match)
+3. `Ctrl-n` / `Ctrl-p` or arrow keys to navigate results
+4. `Enter` to open selection
+5. `Esc` to close
+
+**In Results:**
+- `Ctrl-x` - Open in horizontal split
+- `Ctrl-v` - Open in vertical split
+- `Ctrl-t` - Open in new tab
+- `Ctrl-u` / `Ctrl-d` - Scroll preview up/down
+
+**Tips:**
+- Fuzzy matching means you can type parts of filename (e.g., "init" finds "init.lua")
+- Live grep searches file contents in real-time
+- For live grep to work, install `ripgrep`: `sudo apt install ripgrep`
 
