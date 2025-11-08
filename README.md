@@ -146,6 +146,9 @@ pacman -Syu mingw-w64-ucrt-x86_64-neovim
 Currently configured plugins:
 
 1. **gruvbox.nvim** - Gruvbox colorscheme matching terminal theme
+2. **nvim-tree.lua** - File explorer with icons (replaces NERDTree)
+
+See [Plugin Guide](#plugin-guide) below for detailed usage.
 
 ### Plugin Management
 
@@ -236,3 +239,42 @@ Ensure config is in the correct location for your platform.
 ## License
 
 Feel free to use and modify this configuration as you like!
+
+## Plugin Guide
+
+### nvim-tree (File Explorer)
+
+A modern file tree explorer for Neovim, replacing NERDTree.
+
+**Opening/Closing:**
+- `F2` - Toggle file tree
+- `Space + e` - Focus file tree
+
+**Navigation:**
+- `Enter` or `o` - Open file/folder
+- `h` - Close folder
+- `l` - Open folder
+- `-` - Navigate to parent directory
+- `Ctrl-v` - Open in vertical split
+- `Ctrl-x` - Open in horizontal split
+- `Ctrl-t` - Open in new tab
+
+**File Operations:**
+- `a` - Create new file/directory (add `/` at end for directory)
+- `r` - Rename file/directory
+- `d` - Delete file/directory
+- `x` - Cut file/directory
+- `c` - Copy file/directory
+- `p` - Paste file/directory
+- `y` - Copy filename to clipboard
+
+**Display:**
+- `H` - Toggle hidden files (dotfiles)
+- `R` - Refresh tree
+- `?` - Show help with all keybindings
+
+**Tips:**
+- Tree opens in current file's directory
+- Icons require FiraCode Nerd Font
+- Use `q` to close the tree (or `F2` to toggle)
+
