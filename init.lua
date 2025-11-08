@@ -192,6 +192,14 @@ require("lazy").setup({
             })
         end,
     },
+
+    -- Comment.nvim: Easy code commenting
+    {
+        "numToStr/Comment.nvim",
+        config = function()
+            require('Comment').setup()
+        end,
+    },
 })
 
 -- Window navigation (Ctrl+hjkl) - from vimrc.unix
@@ -220,4 +228,4 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help' })
 vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Recent files' })
 
-print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns + Telescope + Treesitter + which-key active.")
+print("Neovim config loaded! All plugins active.")

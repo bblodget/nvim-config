@@ -151,6 +151,7 @@ Currently configured plugins:
 4. **telescope.nvim** - Fuzzy finder for files and text search
 5. **nvim-treesitter** - Advanced syntax highlighting and code understanding
 6. **which-key.nvim** - Keybinding helper popup menu
+7. **Comment.nvim** - Easy and smart code commenting
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -407,4 +408,42 @@ Shows available keybindings in a popup menu - helps you discover and remember co
 - Discover keybindings as you learn
 - Never forget what commands are available
 - No need to memorize everything upfront
+
+
+### Comment.nvim (Code Commenting)
+
+Quick and easy code commenting that understands every language.
+
+**Basic Usage:**
+- `gcc` - Toggle comment on current line
+- `gc` in visual mode - Toggle comment on selection
+
+**With Motions:**
+- `gc` + motion - Comment using motion
+  - `gcap` - Comment around paragraph
+  - `gc3j` - Comment current line + 3 lines down
+  - `gc$` - Comment from cursor to end of line
+  - `gcG` - Comment from cursor to end of file
+
+**Visual Mode:**
+1. Select lines with `V` (visual line mode) or `v` (visual mode)
+2. Press `gc` - Toggle comment on selection
+
+**Block Comments:**
+- `gbc` - Toggle block comment on current line
+- `gb` in visual mode - Toggle block comment on selection
+
+**Smart Features:**
+- Automatically detects comment style for each language
+  - `//` for JavaScript, C, C++, Rust
+  - `#` for Python, Bash, YAML
+  - `--` for Lua, Haskell
+  - `/* */` for CSS, C (block comments)
+- Treesitter integration for context-aware commenting
+- Preserves indentation
+
+**Tips:**
+- Use `.` to repeat the last comment action
+- Works with counts: `5gcc` comments 5 lines
+- Respects vim motions: `gcip` comments inside paragraph
 
