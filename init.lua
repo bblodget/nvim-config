@@ -117,6 +117,53 @@ require("lazy").setup({
             })
         end,
     },
+
+    -- Treesitter: Better syntax highlighting and code understanding
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                -- Install parsers for these languages
+                ensure_installed = {
+                    "lua",
+                    "vim",
+                    "vimdoc",
+                    "bash",
+                    "python",
+                    "javascript",
+                    "typescript",
+                    "c",
+                    "cpp",
+                    "rust",
+                    "go",
+                    "html",
+                    "css",
+                    "json",
+                    "yaml",
+                    "markdown",
+                },
+                -- Install parsers synchronously (only applied to `ensure_installed`)
+                sync_install = false,
+                -- Automatically install missing parsers when entering buffer
+                auto_install = true,
+                highlight = {
+                    enable = true,
+                    -- Disable for very large files
+                    disable = function(lang, buf)
+                        local max_filesize = 100 * 1024 -- 100 KB
+                        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                        if ok and stats and stats.size > max_filesize then
+                            return true
+                        end
+                    end,
+                },
+                indent = {
+                    enable = true
+                },
+            })
+        end,
+    },
 })
 
 -- Window navigation (Ctrl+hjkl) - from vimrc.unix
@@ -145,4 +192,4 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help' })
 vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Recent files' })
 
-print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns + Telescope active.")
+print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns + Telescope + Treesitter active.")

@@ -149,6 +149,7 @@ Currently configured plugins:
 2. **nvim-tree.lua** - File explorer with icons (replaces NERDTree)
 3. **gitsigns.nvim** - Git integration with visual indicators and operations
 4. **telescope.nvim** - Fuzzy finder for files and text search
+5. **nvim-treesitter** - Advanced syntax highlighting and code understanding
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -339,4 +340,34 @@ Powerful fuzzy finder for files, text, and more. Essential for navigating large 
 - Fuzzy matching means you can type parts of filename (e.g., "init" finds "init.lua")
 - Live grep searches file contents in real-time
 - For live grep to work, install `ripgrep`: `sudo apt install ripgrep`
+
+
+### Treesitter (Advanced Syntax Highlighting)
+
+Better syntax highlighting that understands code structure, not just patterns.
+
+**What it does:**
+- Parses code into a syntax tree (understands language structure)
+- More accurate and consistent highlighting
+- Enables advanced features (text objects, code navigation, etc.)
+- Automatically installs parsers for configured languages
+
+**Supported Languages:**
+Pre-configured parsers for: Lua, Vim, Bash, Python, JavaScript, TypeScript, C, C++, Rust, Go, HTML, CSS, JSON, YAML, Markdown
+
+**Commands:**
+- `:TSInstall <language>` - Install parser for a specific language
+- `:TSUpdate` - Update all installed parsers
+- `:TSInstallInfo` - Show installed parsers and their status
+- `:TSUninstall <language>` - Remove a parser
+
+**Features:**
+- **Syntax highlighting** - More accurate than regex-based highlighting
+- **Smart indentation** - Understands code structure for better auto-indent
+- **Auto-install** - Automatically downloads parsers for new file types
+
+**Tips:**
+- Treesitter highlighting works immediately after parser installation
+- Parsers are automatically updated with `:TSUpdate`
+- For large files (>100KB), treesitter disables automatically for performance
 
