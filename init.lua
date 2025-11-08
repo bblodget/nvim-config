@@ -164,6 +164,34 @@ require("lazy").setup({
             })
         end,
     },
+
+    -- which-key: Show available keybindings in a popup
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        config = function()
+            local wk = require("which-key")
+            wk.setup({
+                delay = 500,  -- Delay before popup shows (ms)
+            })
+
+            -- Register key group descriptions
+            wk.add({
+                { "<leader>e", desc = "Explorer" },
+                { "<leader>f", group = "Find" },
+                { "<leader>ff", desc = "Find Files" },
+                { "<leader>fg", desc = "Live Grep" },
+                { "<leader>fb", desc = "Find Buffers" },
+                { "<leader>fr", desc = "Recent Files" },
+                { "<leader>fh", desc = "Help Tags" },
+                { "<leader>g", group = "Git" },
+                { "<leader>gp", desc = "Preview Hunk" },
+                { "<leader>gb", desc = "Toggle Blame" },
+                { "<leader>gs", desc = "Stage Hunk" },
+                { "<leader>gu", desc = "Unstage Hunk" },
+            })
+        end,
+    },
 })
 
 -- Window navigation (Ctrl+hjkl) - from vimrc.unix
@@ -192,4 +220,4 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help' })
 vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Recent files' })
 
-print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns + Telescope + Treesitter active.")
+print("Neovim config loaded! Gruvbox + nvim-tree + Gitsigns + Telescope + Treesitter + which-key active.")

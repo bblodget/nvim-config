@@ -150,6 +150,7 @@ Currently configured plugins:
 3. **gitsigns.nvim** - Git integration with visual indicators and operations
 4. **telescope.nvim** - Fuzzy finder for files and text search
 5. **nvim-treesitter** - Advanced syntax highlighting and code understanding
+6. **which-key.nvim** - Keybinding helper popup menu
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -370,4 +371,40 @@ Pre-configured parsers for: Lua, Vim, Bash, Python, JavaScript, TypeScript, C, C
 - Treesitter highlighting works immediately after parser installation
 - Parsers are automatically updated with `:TSUpdate`
 - For large files (>100KB), treesitter disables automatically for performance
+
+
+### which-key (Keybinding Helper)
+
+Shows available keybindings in a popup menu - helps you discover and remember commands.
+
+**How it works:**
+1. Press `Space` (leader key)
+2. Wait ~500ms
+3. Popup appears showing available commands
+4. Continue typing to execute, or explore groups
+
+**What you'll see:**
+- **e** → Explorer (nvim-tree)
+- **f** → Find ▸ (opens submenu)
+  - **ff** → Find Files
+  - **fg** → Live Grep
+  - **fb** → Find Buffers
+  - **fr** → Recent Files
+  - **fh** → Help Tags
+- **g** → Git ▸ (opens submenu)
+  - **gp** → Preview Hunk
+  - **gb** → Toggle Blame
+  - **gs** → Stage Hunk
+  - **gu** → Unstage Hunk
+
+**Tips:**
+- Symbol `▸` means there's a submenu with more commands
+- You can continue typing immediately - don't need to wait for popup
+- Popup delay is 500ms (can be adjusted in config)
+- Shows all registered leader key commands
+
+**Benefits:**
+- Discover keybindings as you learn
+- Never forget what commands are available
+- No need to memorize everything upfront
 
