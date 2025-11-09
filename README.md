@@ -155,6 +155,7 @@ Currently configured plugins:
 6. **which-key.nvim** - Keybinding helper popup menu
 7. **Comment.nvim** - Easy and smart code commenting
 8. **toggleterm.nvim** - Terminal integration for running shell commands
+9. **nvim-lspconfig + nvim-cmp** - Language Server Protocol with autocompletion
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -546,4 +547,105 @@ lazygit is a terminal-based Git UI that works perfectly in toggleterm.
 - Don't run interactive editors (nvim, vi, nano) inside the terminal
 - Don't use mouse to click into terminal (use `Space + t` or `Ctrl + \` instead)
 - If you accidentally get "Cannot make changes, 'modifiable' is off", press `Ctrl + \` to close and reopen
+
+
+### LSP (Language Server Protocol) + Autocompletion
+
+Intelligent code features powered by language servers - autocomplete, go-to-definition, error checking, and more.
+
+**Languages Configured:**
+- **C/C++** - clangd
+- **Python** - pyright
+- **JavaScript/TypeScript** - typescript-language-server
+
+**Installation:**
+
+Language servers must be installed separately:
+
+```bash
+# C/C++
+sudo apt install clangd
+
+# Node.js/npm (for pyright and typescript-language-server)
+sudo apt install nodejs npm
+
+# Python LSP
+sudo npm install -g pyright
+
+# JavaScript/TypeScript LSP
+sudo npm install -g typescript-language-server typescript
+```
+
+**LSP Features:**
+
+1. **Autocompletion** - Intelligent code suggestions as you type
+2. **Go to Definition** - Jump to where functions/variables are defined
+3. **Hover Documentation** - See documentation for functions/types
+4. **Error Checking** - Real-time syntax and type errors
+5. **Find References** - Find all uses of a symbol
+6. **Rename** - Rename variables across entire project
+7. **Code Actions** - Quick fixes and refactoring suggestions
+
+**Keybindings:**
+
+**Navigation:**
+- `gd` - Go to definition
+- `gD` - Go to declaration
+- `gr` - Find references
+- `gi` - Go to implementation
+- `K` - Hover documentation (show function docs)
+
+**Code Actions:**
+- `Space + rn` - Rename symbol
+- `Space + ca` - Code action (quick fixes)
+
+**Diagnostics (Errors/Warnings):**
+- `]d` - Next diagnostic (error/warning)
+- `[d` - Previous diagnostic
+
+**Autocompletion:**
+- Start typing - Autocomplete popup appears automatically
+- `Ctrl + Space` - Manually trigger completion
+- `Tab` - Select next item in completion menu
+- `Shift + Tab` - Select previous item
+- `Enter` - Confirm selection
+- `Ctrl + e` - Abort/close completion menu
+
+**How It Works:**
+
+1. **Open a code file** (`.c`, `.py`, `.js`, etc.)
+2. **LSP starts automatically** - Language server connects in background
+3. **Start coding** - Autocomplete, errors, etc. appear as you type
+4. **Use keybindings** - Navigate code with `gd`, `gr`, `K`, etc.
+
+**Check LSP Status:**
+```vim
+:LspInfo
+```
+
+Shows which language servers are attached to current buffer.
+
+**Example Workflow:**
+
+1. **Write code** - Autocomplete suggests functions/variables
+2. **See errors** - Red underlines show issues in real-time
+3. **Jump to definition** - Cursor on function, press `gd`
+4. **See docs** - Cursor on function, press `K`
+5. **Rename** - Press `Space + rn`, type new name, Enter
+6. **Quick fix** - Cursor on error, press `Space + ca` for fixes
+
+**Tips:**
+- LSP works best in git repositories (uses project root)
+- For C/C++: Create `compile_commands.json` for best results
+- For Python: LSP detects venvs automatically
+- Autocomplete learns from your code as you type
+- Use `:LspInfo` to troubleshoot if LSP not working
+
+**Troubleshooting:**
+
+If LSP not working:
+1. Check language server installed: `which clangd` / `which pyright`
+2. Check LSP attached: `:LspInfo`
+3. Check errors: `:messages`
+4. Restart LSP: `:LspRestart`
 

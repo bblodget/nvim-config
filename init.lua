@@ -224,6 +224,114 @@ require("lazy").setup({
             })
         end,
     },
+
+    -- LSP Configuration
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            -- Autocompletion
+            "hrsh7th/nvim-cmp",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            -- Snippets
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+        },
+        config = function()
+            -- Setup nvim-cmp (autocompletion)
+            local cmp = require('cmp')
+            local luasnip = require('luasnip')
+
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end,
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<Tab>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
+                    ['<S-Tab>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
+                }),
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
+                    { name = 'buffer' },
+                    { name = 'path' },
+                }),
+            })
+
+            -- Setup LSP keybindings
+            local on_attach = function(client, bufnr)
+                local opts = { buffer = bufnr, silent = true }
+
+                -- LSP keybindings
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('force', opts, { desc = 'Go to definition' }))
+                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('force', opts, { desc = 'Go to declaration' }))
+                vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('force', opts, { desc = 'Find references' }))
+                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('force', opts, { desc = 'Go to implementation' }))
+                vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('force', opts, { desc = 'Hover documentation' }))
+                vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = 'Rename symbol' }))
+                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('force', opts, { desc = 'Code action' }))
+                vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, vim.tbl_extend('force', opts, { desc = 'Previous diagnostic' }))
+                vim.keymap.set('n', ']d', vim.diagnostic.goto_next, vim.tbl_extend('force', opts, { desc = 'Next diagnostic' }))
+            end
+
+            -- Capabilities for autocompletion
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+            -- Setup language servers using new vim.lsp.config API
+            -- C/C++ (clangd)
+            vim.lsp.config('clangd', {
+                cmd = { 'clangd' },
+                filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+                root_dir = vim.fs.root(0, { 'compile_commands.json', '.git' }),
+                capabilities = capabilities,
+            })
+
+            -- Python (pyright)
+            vim.lsp.config('pyright', {
+                cmd = { 'pyright-langserver', '--stdio' },
+                filetypes = { 'python' },
+                root_dir = vim.fs.root(0, { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile', '.git' }),
+                capabilities = capabilities,
+            })
+
+            -- JavaScript/TypeScript (typescript-language-server)
+            vim.lsp.config('ts_ls', {
+                cmd = { 'typescript-language-server', '--stdio' },
+                filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+                root_dir = vim.fs.root(0, { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' }),
+                capabilities = capabilities,
+            })
+
+            -- Auto-attach keybindings when LSP starts
+            vim.api.nvim_create_autocmd('LspAttach', {
+                callback = function(args)
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    on_attach(client, args.buf)
+                end,
+            })
+
+            -- Enable LSP for these servers
+            vim.lsp.enable({ 'clangd', 'pyright', 'ts_ls' })
+        end,
+    },
 })
 
 -- Window navigation (Ctrl+hjkl) - from vimrc.unix
