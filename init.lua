@@ -192,6 +192,10 @@ require("lazy").setup({
                 { "<leader>gb", desc = "Toggle Blame" },
                 { "<leader>gs", desc = "Stage Hunk" },
                 { "<leader>gu", desc = "Unstage Hunk" },
+                { "<leader>l", group = "LSP" },
+                { "<leader>lt", desc = "Toggle LSP" },
+                { "<leader>rn", desc = "Rename (LSP)" },
+                { "<leader>ca", desc = "Code Action (LSP)" },
             })
         end,
     },
@@ -232,23 +236,17 @@ require("lazy").setup({
             -- Autocompletion
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
-            -- Snippets
-            "L3MON4D3/LuaSnip",
-            "saadparwaiz1/cmp_luasnip",
+            -- Snippets (disabled - uncomment to enable snippet support)
+            -- "L3MON4D3/LuaSnip",
+            -- "rafamadriz/friendly-snippets",
+            -- "saadparwaiz1/cmp_luasnip",
         },
         config = function()
             -- Setup nvim-cmp (autocompletion)
             local cmp = require('cmp')
-            local luasnip = require('luasnip')
 
             cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end,
-                },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.abort(),
@@ -270,8 +268,7 @@ require("lazy").setup({
                 }),
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'buffer' },
+                    -- { name = 'luasnip' },  -- Uncomment to enable snippet suggestions
                     { name = 'path' },
                 }),
             })
@@ -290,10 +287,28 @@ require("lazy").setup({
                 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('force', opts, { desc = 'Code action' }))
                 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, vim.tbl_extend('force', opts, { desc = 'Previous diagnostic' }))
                 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, vim.tbl_extend('force', opts, { desc = 'Next diagnostic' }))
+
+                -- LSP toggle (only set when LSP is attached)
+                vim.keymap.set('n', '<leader>lt', function()
+                    local clients = vim.lsp.get_clients({ bufnr = bufnr })
+                    if #clients > 0 then
+                        vim.cmd('LspStop')
+                        -- Disable nvim-cmp completions
+                        require('cmp').setup.buffer({ enabled = false })
+                        print('LSP and completions stopped (distraction-free mode)')
+                    else
+                        vim.cmd('LspStart')
+                        -- Re-enable nvim-cmp completions
+                        require('cmp').setup.buffer({ enabled = true })
+                        print('LSP and completions started')
+                    end
+                end, vim.tbl_extend('force', opts, { desc = 'Toggle LSP' }))
             end
 
             -- Capabilities for autocompletion
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- Disable snippet support - we don't want snippet-formatted completions
+            capabilities.textDocument.completion.completionItem.snippetSupport = false
 
             -- Setup language servers using new vim.lsp.config API
             -- C/C++ (clangd)

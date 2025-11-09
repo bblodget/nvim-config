@@ -599,6 +599,11 @@ sudo npm install -g typescript-language-server typescript
 - `Space + rn` - Rename symbol
 - `Space + ca` - Code action (quick fixes)
 
+**LSP Control:**
+- `Space + lt` - Toggle LSP and completions on/off (distraction-free mode)
+  - **ON**: LSP active with completions
+  - **OFF**: No LSP, no completions - pure distraction-free coding
+
 **Diagnostics (Errors/Warnings):**
 - `]d` - Next diagnostic (error/warning)
 - `[d` - Previous diagnostic
@@ -610,6 +615,13 @@ sudo npm install -g typescript-language-server typescript
 - `Shift + Tab` - Select previous item
 - `Enter` - Confirm selection
 - `Ctrl + e` - Abort/close completion menu
+
+**Completion Sources:**
+Our setup provides minimal, focused completions:
+- **LSP suggestions** - Smart, context-aware completions from language servers
+- **Path completions** - File paths when typing paths
+- **No snippets** - Snippet support disabled for cleaner, less aggressive completions
+- **No buffer words** - Doesn't suggest random words from current file
 
 **How It Works:**
 
@@ -640,6 +652,9 @@ Shows which language servers are attached to current buffer.
 - For Python: LSP detects venvs automatically
 - Autocomplete learns from your code as you type
 - Use `:LspInfo` to troubleshoot if LSP not working
+- Press `Space + lt` for distraction-free coding when you don't need assistance
+- Use `Ctrl-o` to jump back after `gd` (go to definition)
+- Use `Ctrl-i` to jump forward in your navigation history
 
 **Troubleshooting:**
 
@@ -648,4 +663,3 @@ If LSP not working:
 2. Check LSP attached: `:LspInfo`
 3. Check errors: `:messages`
 4. Restart LSP: `:LspRestart`
-
