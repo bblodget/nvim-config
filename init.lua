@@ -23,6 +23,13 @@ vim.opt.visualbell = true       -- Visual bell instead of beep
 vim.opt.list = true
 vim.opt.listchars = { tab = '|-', trail = '-' }
 
+-- Auto-reload files when they change on disk
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+    pattern = "*",
+    command = "checktime",
+})
+
 -- Enable syntax highlighting
 vim.cmd('syntax on')
 
