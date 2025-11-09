@@ -495,15 +495,52 @@ Powerful terminal integration for running shell commands without leaving Neovim.
 
 **Important - Git Commits:**
 - **Use `git commit -m "message"`** for commits (inline message)
+- **OR use lazygit** for a full-featured git UI (recommended - see below)
 - **Avoid `git commit`** without `-m` - interactive editors (nano/vi) conflict with Esc key
-- For longer commit messages, consider committing outside nvim or using a git GUI
 - This is a limitation of terminal-in-editor workflows, not a bug
 
+**Using lazygit (Recommended for Git):**
+
+lazygit is a terminal-based Git UI that works perfectly in toggleterm.
+
+1. **Install lazygit** (if not already installed):
+   ```bash
+   LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+   curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+   tar xf lazygit.tar.gz lazygit
+   install -D lazygit ~/.local/bin/lazygit
+   rm lazygit lazygit.tar.gz
+   ```
+
+2. **Use in toggleterm**:
+   - `Space + t` - Open terminal
+   - Type `lazygit`
+   - Interactive git UI opens
+
+3. **lazygit keybindings**:
+   - `?` - Show help/all keybindings
+   - Arrow keys - Navigate
+   - `Space` - Stage/unstage files
+   - `c` - Commit (opens editor for message)
+   - `P` - Push
+   - `p` - Pull
+   - `[` / `]` - Navigate between tabs (Files, Branches, Commits, etc.)
+   - `Enter` - View details/diff
+   - `q` - Quit lazygit
+
+4. **Why lazygit is better**:
+   - No Esc key conflicts
+   - Visual interface for staging, committing, branching
+   - See status, diffs, and history all at once
+   - Write full commit messages without issues
+   - Manage branches, stashes, merges easily
+
 **Common Workflows:**
-1. **Quick git status**: `Space + t`, type `git status`, `Esc` to go back
-2. **Git commit**: `Space + t`, type `git commit -m "fix: update config"`, `Esc` when done
-3. **Run tests**: `Space + t`, run test command, watch output, `Esc` when done
-4. **Build project**: `Space + t`, run build, `Ctrl + \` to hide while it runs
+1. **Git with lazygit**: `Space + t`, type `lazygit`, stage files, commit, push, `q` to quit
+2. **Quick git status**: `Space + t`, type `git status`, `Esc` to go back
+3. **Git commit (inline)**: `Space + t`, type `git commit -m "fix: update config"`, `Esc` when done
+4. **Run tests**: `Space + t`, run test command, watch output, `Esc` when done
+5. **Build project**: `Space + t`, run build, `Ctrl + \` to hide while it runs
 
 **What NOT to do:**
 - Don't run interactive editors (nvim, vi, nano) inside the terminal
