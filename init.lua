@@ -229,6 +229,11 @@ require("lazy").setup({
         end,
     },
 
+    -- GitHub Copilot
+    {
+        "github/copilot.vim",
+    },
+
     -- LSP Configuration
     {
         "neovim/nvim-lspconfig",
@@ -295,14 +300,18 @@ require("lazy").setup({
                         vim.cmd('LspStop')
                         -- Disable nvim-cmp completions
                         require('cmp').setup.buffer({ enabled = false })
-                        print('LSP and completions stopped (distraction-free mode)')
+                        -- Disable Copilot
+                        vim.cmd('Copilot disable')
+                        print('LSP, completions, and Copilot stopped (distraction-free mode)')
                     else
                         vim.cmd('LspStart')
                         -- Re-enable nvim-cmp completions
                         require('cmp').setup.buffer({ enabled = true })
-                        print('LSP and completions started')
+                        -- Re-enable Copilot
+                        vim.cmd('Copilot enable')
+                        print('LSP, completions, and Copilot started')
                     end
-                end, vim.tbl_extend('force', opts, { desc = 'Toggle LSP' }))
+                end, vim.tbl_extend('force', opts, { desc = 'Toggle LSP & Copilot' }))
             end
 
             -- Capabilities for autocompletion

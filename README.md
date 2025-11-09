@@ -156,6 +156,7 @@ Currently configured plugins:
 7. **Comment.nvim** - Easy and smart code commenting
 8. **toggleterm.nvim** - Terminal integration for running shell commands
 9. **nvim-lspconfig + nvim-cmp** - Language Server Protocol with autocompletion
+10. **copilot.vim** - GitHub Copilot AI code suggestions
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -599,10 +600,10 @@ sudo npm install -g typescript-language-server typescript
 - `Space + rn` - Rename symbol
 - `Space + ca` - Code action (quick fixes)
 
-**LSP Control:**
-- `Space + lt` - Toggle LSP and completions on/off (distraction-free mode)
-  - **ON**: LSP active with completions
-  - **OFF**: No LSP, no completions - pure distraction-free coding
+**LSP & AI Control:**
+- `Space + lt` - Toggle LSP, completions, and Copilot on/off (distraction-free mode)
+  - **ON**: LSP active, completions enabled, Copilot enabled
+  - **OFF**: No LSP, no completions, no Copilot - pure distraction-free coding
 
 **Diagnostics (Errors/Warnings):**
 - `]d` - Next diagnostic (error/warning)
@@ -620,6 +621,7 @@ sudo npm install -g typescript-language-server typescript
 Our setup provides minimal, focused completions:
 - **LSP suggestions** - Smart, context-aware completions from language servers
 - **Path completions** - File paths when typing paths
+- **GitHub Copilot** - AI-powered code suggestions (ghost text)
 - **No snippets** - Snippet support disabled for cleaner, less aggressive completions
 - **No buffer words** - Doesn't suggest random words from current file
 
@@ -663,3 +665,89 @@ If LSP not working:
 2. Check LSP attached: `:LspInfo`
 3. Check errors: `:messages`
 4. Restart LSP: `:LspRestart`
+
+
+### GitHub Copilot (AI Code Suggestions)
+
+AI-powered code completion that suggests entire lines or blocks of code as you type.
+
+**Prerequisites:**
+- GitHub Copilot subscription (free for students/open source maintainers, $10/month otherwise)
+- Node.js 22.x or newer (required by Copilot plugin)
+
+**Installation Check:**
+```bash
+node --version  # Should be v22.x or newer
+```
+
+**First-Time Setup:**
+
+After installing the plugin, authenticate with GitHub:
+```vim
+:Copilot setup
+```
+
+This will:
+1. Give you a code
+2. Open a browser to GitHub
+3. Prompt you to authenticate and enter the code
+4. Connect Copilot to your Neovim
+
+**How It Works:**
+
+As you type, Copilot suggests code completions shown as **ghost text** (grayed out):
+- Suggestions appear automatically based on context
+- Uses your code, comments, and file context to generate suggestions
+- Can suggest single lines, entire functions, or blocks of code
+
+**Keybindings:**
+
+- `Tab` - Accept the current suggestion
+- `Esc` - Dismiss the suggestion
+- `Alt-]` - Next suggestion (if multiple available)
+- `Alt-[` - Previous suggestion
+
+**Commands:**
+
+- `:Copilot status` - Check Copilot status and authentication
+- `:Copilot disable` - Temporarily disable Copilot
+- `:Copilot enable` - Re-enable Copilot
+- `:Copilot setup` - Re-authenticate or change account
+
+**Toggle with LSP:**
+
+Use `Space + lt` to toggle **everything** (LSP + completions + Copilot):
+- **ON**: Full AI assistance mode
+- **OFF**: Pure distraction-free coding
+
+**Tips:**
+
+- **Write comments** describing what you want - Copilot uses them as context
+- **Start function signatures** - Copilot will suggest the implementation
+- **Works in all languages** - Python, JavaScript, C/C++, Rust, Go, etc.
+- **Context-aware** - Uses surrounding code and file content
+- **Tab vs Enter**: Use `Tab` for Copilot, `Enter` for nvim-cmp completions
+
+**Example Workflow:**
+
+1. Write a comment: `// Function to calculate factorial`
+2. Start typing: `def factorial(`
+3. Copilot suggests the entire implementation as ghost text
+4. Press `Tab` to accept, or keep typing to ignore
+5. Refine or modify as needed
+
+**Best Practices:**
+
+- Use Copilot for boilerplate, common patterns, and scaffolding
+- Always review suggestions - don't blindly accept
+- Great for tests, documentation, and repetitive code
+- Combine with LSP for maximum productivity
+
+**Troubleshooting:**
+
+If Copilot not working:
+1. Check authentication: `:Copilot status`
+2. Check Node.js version: `:!node --version` (must be v22+)
+3. Re-authenticate: `:Copilot setup`
+4. Check subscription active at https://github.com/settings/copilot
+5. Restart Neovim after authentication
