@@ -139,7 +139,9 @@ pacman -Syu mingw-w64-ucrt-x86_64-neovim
 
 - **Leader key**: `Space`
 - **Window navigation**: `Ctrl-h/j/k/l` - Move between splits
-- **More mappings**: Will be added as plugins are configured
+- **Terminal**: `Space+t` - Open terminal in current file's directory
+  - `Esc` - Exit terminal mode (return to normal mode)
+  - `Ctrl-h/j/k/l` - Navigate between terminal and editor splits
 
 ### Plugins
 
@@ -152,6 +154,7 @@ Currently configured plugins:
 5. **nvim-treesitter** - Advanced syntax highlighting and code understanding
 6. **which-key.nvim** - Keybinding helper popup menu
 7. **Comment.nvim** - Easy and smart code commenting
+8. **toggleterm.nvim** - Terminal integration for running shell commands
 
 See [Plugin Guide](#plugin-guide) below for detailed usage.
 
@@ -253,7 +256,8 @@ A modern file tree explorer for Neovim, replacing NERDTree.
 
 **Opening/Closing:**
 - `F2` - Toggle file tree
-- `Space + e` - Focus file tree
+- `Space + e` - Focus file tree (stays in current directory)
+- `Space + E` - Find current file in tree (reveals file location)
 
 **Navigation:**
 - `Enter` or `o` - Open file/folder
@@ -280,6 +284,7 @@ A modern file tree explorer for Neovim, replacing NERDTree.
 
 **Tips:**
 - Tree opens in current file's directory
+- Use `Space + E` after opening a file with Telescope to locate it in the tree
 - Icons require FiraCode Nerd Font
 - Use `q` to close the tree (or `F2` to toggle)
 
@@ -317,7 +322,8 @@ Visual git indicators and operations directly in the editor.
 Powerful fuzzy finder for files, text, and more. Essential for navigating large codebases.
 
 **File Finding:**
-- `Space + ff` - **Find Files** - Fuzzy search by filename
+- `Space + ff` - **Find Files** - Fuzzy search by filename (excludes hidden files)
+- `Space + fa` - **Find All Files** - Fuzzy search including hidden files (dotfiles)
 - `Space + fr` - **Recent Files** - Browse recently opened files
 - `Space + fb` - **Find Buffers** - Switch between open files
 
@@ -340,6 +346,8 @@ Powerful fuzzy finder for files, text, and more. Essential for navigating large 
 
 **Tips:**
 - Fuzzy matching means you can type parts of filename (e.g., "init" finds "init.lua")
+- Use `Space+ff` for normal searches (cleaner results, excludes dotfiles)
+- Use `Space+fa` when you need to find config files like `.bashrc`, `.gitignore`, etc.
 - Live grep searches file contents in real-time
 - For live grep to work, install `ripgrep`: `sudo apt install ripgrep`
 
@@ -446,4 +454,59 @@ Quick and easy code commenting that understands every language.
 - Use `.` to repeat the last comment action
 - Works with counts: `5gcc` comments 5 lines
 - Respects vim motions: `gcip` comments inside paragraph
+
+
+### toggleterm.nvim (Terminal Integration)
+
+Powerful terminal integration for running shell commands without leaving Neovim.
+
+**Opening/Closing Terminal:**
+- `Space + t` - Open terminal in current file's directory
+- `Ctrl + \` - Toggle terminal on/off
+- `Esc` - Exit terminal mode (return to normal mode)
+- Type `exit` or `Ctrl-d` - Close terminal permanently
+
+**How it works:**
+1. Press `Space + t` to open terminal
+2. Terminal opens in horizontal split at bottom
+3. Automatically starts in current file's directory
+4. Run any shell commands (git, npm, make, etc.)
+5. Press `Esc` to switch back to editing
+6. Press `Ctrl + \` to toggle terminal visibility
+
+**Navigation:**
+- `Ctrl-h/j/k/l` - Move between terminal and editor splits
+- Terminal persists - hiding it keeps it running in background
+- Re-open with `Ctrl + \` to see previous session
+
+**Features:**
+- Terminal starts in insert mode (ready to type)
+- Shaded background to distinguish from editor
+- Multiple terminals supported (advanced usage)
+- Terminal survives hiding/showing
+
+**Tips:**
+- Use `Space + t` when you need terminal in specific directory
+- Use `Ctrl + \` to quickly toggle terminal on/off
+- Terminal stays running even when hidden
+- Great for running tests, build commands, git operations
+- Terminal opens in insert mode - just start typing commands
+- Press `Esc` once to exit insert mode before closing or navigating away
+
+**Important - Git Commits:**
+- **Use `git commit -m "message"`** for commits (inline message)
+- **Avoid `git commit`** without `-m` - interactive editors (nano/vi) conflict with Esc key
+- For longer commit messages, consider committing outside nvim or using a git GUI
+- This is a limitation of terminal-in-editor workflows, not a bug
+
+**Common Workflows:**
+1. **Quick git status**: `Space + t`, type `git status`, `Esc` to go back
+2. **Git commit**: `Space + t`, type `git commit -m "fix: update config"`, `Esc` when done
+3. **Run tests**: `Space + t`, run test command, watch output, `Esc` when done
+4. **Build project**: `Space + t`, run build, `Ctrl + \` to hide while it runs
+
+**What NOT to do:**
+- Don't run interactive editors (nvim, vi, nano) inside the terminal
+- Don't use mouse to click into terminal (use `Space + t` or `Ctrl + \` instead)
+- If you accidentally get "Cannot make changes, 'modifiable' is off", press `Ctrl + \` to close and reopen
 

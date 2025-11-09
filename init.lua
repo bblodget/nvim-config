@@ -177,9 +177,12 @@ require("lazy").setup({
 
             -- Register key group descriptions
             wk.add({
-                { "<leader>e", desc = "Explorer" },
+                { "<leader>e", desc = "Focus Explorer" },
+                { "<leader>E", desc = "Find File in Explorer" },
+                { "<leader>t", desc = "Open Terminal" },
                 { "<leader>f", group = "Find" },
                 { "<leader>ff", desc = "Find Files" },
+                { "<leader>fa", desc = "Find All (+ hidden)" },
                 { "<leader>fg", desc = "Live Grep" },
                 { "<leader>fb", desc = "Find Buffers" },
                 { "<leader>fr", desc = "Recent Files" },
@@ -200,6 +203,27 @@ require("lazy").setup({
             require('Comment').setup()
         end,
     },
+
+    -- toggleterm.nvim: Better terminal integration
+    {
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        config = function()
+            require("toggleterm").setup({
+                size = 15,
+                open_mapping = [[<c-\>]],
+                hide_numbers = true,
+                shade_terminals = true,
+                start_in_insert = true,  -- Start in insert mode when terminal opens
+                insert_mappings = true,   -- Allow mappings in insert mode
+                terminal_mappings = true, -- Allow mappings in terminal mode (pass keys through)
+                persist_size = true,
+                direction = "horizontal",  -- 'vertical' | 'horizontal' | 'tab' | 'float'
+                close_on_exit = true,
+                shell = vim.o.shell,
+            })
+        end,
+    },
 })
 
 -- Window navigation (Ctrl+hjkl) - from vimrc.unix
@@ -211,6 +235,21 @@ vim.keymap.set('n', '<C-H>', '<C-W><C-H>', { desc = 'Move to window left' })
 -- nvim-tree keybindings
 vim.keymap.set('n', '<F2>', ':NvimTreeToggle<CR>', { desc = 'Toggle file tree', silent = true })
 vim.keymap.set('n', '<leader>e', ':NvimTreeFocus<CR>', { desc = 'Focus file tree', silent = true })
+vim.keymap.set('n', '<leader>E', ':NvimTreeFindFile<CR>', { desc = 'Find current file in tree', silent = true })
+
+-- Terminal keybindings (toggleterm)
+vim.keymap.set('n', '<leader>t', function()
+    -- Get current file's directory
+    local dir = vim.fn.expand('%:p:h')
+    -- Open terminal in that directory
+    local Terminal = require('toggleterm.terminal').Terminal
+    local term = Terminal:new({ dir = dir })
+    term:toggle()
+end, { desc = 'Open terminal in current directory' })
+
+-- Ctrl+\ also toggles terminal (built into toggleterm)
+-- Esc exits terminal mode in toggleterm
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
 
 -- Gitsigns keybindings
 vim.keymap.set('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', { desc = 'Preview git hunk', silent = true })
@@ -223,6 +262,9 @@ vim.keymap.set('n', '[c', ':Gitsigns prev_hunk<CR>', { desc = 'Previous git hunk
 -- Telescope keybindings
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
+vim.keymap.set('n', '<leader>fa', function()
+    builtin.find_files({ hidden = true, no_ignore = false })
+end, { desc = 'Find all files (including hidden)' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep (search text)' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help' })
