@@ -194,6 +194,10 @@ require("lazy").setup({
                 { "<leader>fb", desc = "Find Buffers" },
                 { "<leader>fr", desc = "Recent Files" },
                 { "<leader>fh", desc = "Help Tags" },
+                { "<leader>b", group = "Buffer" },
+                { "<leader>bn", desc = "Next Buffer" },
+                { "<leader>bp", desc = "Previous Buffer" },
+                { "<leader>bc", desc = "Close Buffer" },
                 { "<leader>g", group = "Git" },
                 { "<leader>gp", desc = "Preview Hunk" },
                 { "<leader>gb", desc = "Toggle Blame" },
@@ -408,5 +412,10 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep (search
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Search help' })
 vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Recent files' })
+
+-- Buffer navigation keybindings
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Next buffer', silent = true })
+vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Previous buffer', silent = true })
+vim.keymap.set('n', '<leader>bc', ':bdelete<CR>', { desc = 'Close buffer', silent = true })
 
 print("Neovim config loaded! All plugins active.")

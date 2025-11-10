@@ -357,6 +357,45 @@ Powerful fuzzy finder for files, text, and more. Essential for navigating large 
 - For live grep to work, install `ripgrep`: `sudo apt install ripgrep`
 
 
+### Buffer Navigation
+
+Quick commands for navigating between open files (buffers) in Neovim.
+
+**What is a Buffer?**
+A buffer is an open file in memory. You can have multiple buffers open at once, even if only one is visible on screen.
+
+**Buffer Navigation Commands:**
+- `Space + bn` - **Next Buffer** - Switch to the next open buffer
+- `Space + bp` - **Previous Buffer** - Switch to the previous open buffer
+- `Space + bc` - **Close Buffer** - Close the current buffer
+- `Space + fb` - **Find Buffers** - Fuzzy search through open buffers (Telescope)
+
+**Alternative Navigation:**
+- `Ctrl-o` - Jump to previous location (across buffers)
+- `Ctrl-i` - Jump to next location (across buffers)
+- `Ctrl-^` or `Ctrl-6` - Toggle between current and last buffer
+
+**Native Vim Commands:**
+- `:ls` or `:buffers` - List all open buffers
+- `:bd` or `:bdelete` - Close current buffer
+- `:bd!` - Force close (discard unsaved changes)
+- `:bn` or `:bnext` - Go to next buffer
+- `:bp` or `:bprev` - Go to previous buffer
+
+**Tips:**
+- Use `Space + fb` (Telescope) when you have many buffers and want to search by name
+- Use `Space + bn/bp` for quick sequential navigation between recent buffers
+- `Ctrl-o` and `Ctrl-i` navigate through your **jump list** (all positions you've been), which can span multiple buffers
+- Buffers stay open even when not visible - use `Space + bc` or `:bd` to close them
+- Closing a buffer doesn't close the window/split - it just removes that file from memory
+
+**Workflow Examples:**
+1. **Quick toggle between two files**: Open both files, then use `Ctrl-^` to switch back and forth
+2. **Browse multiple files**: Use `Space + bn/bp` to cycle through all open buffers
+3. **Find specific buffer**: When you have many files open, use `Space + fb` to fuzzy search
+4. **Close unused buffers**: Use `Space + bc` or `:bd` to clean up buffers you're done with
+
+
 ### Treesitter (Advanced Syntax Highlighting)
 
 Better syntax highlighting that understands code structure, not just patterns.
