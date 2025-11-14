@@ -11,6 +11,7 @@ vim.opt.showmatch = true        -- Highlight matching brackets
 vim.opt.tabstop = 4             -- Tabs are 4 spaces
 vim.opt.shiftwidth = 4          -- Indent by 4 spaces
 vim.opt.expandtab = true        -- Use spaces instead of tabs
+vim.opt.clipboard = 'unnamedplus'  -- Use system clipboard
 
 -- Settings from vimrc.unix
 vim.opt.compatible = false
