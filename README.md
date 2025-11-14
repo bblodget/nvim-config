@@ -178,6 +178,17 @@ Edit `~/.config/nvim/init.lua` to:
 - Adjust colorscheme settings
 - Change basic vim options
 
+**Reloading config after changes:**
+```vim
+:source ~/.config/nvim/init.lua
+```
+or shorthand:
+```vim
+:so ~/.config/nvim/init.lua
+```
+
+**Note**: Sourcing works for most changes (settings, keybindings), but some plugin changes may require restarting Neovim.
+
 **On Windows**: Remember to run `./windows_sync.sh` after making changes!
 
 ## Migrated from Vim
@@ -284,6 +295,7 @@ A modern file tree explorer for Neovim, replacing NERDTree.
 
 **Display:**
 - `H` - Toggle hidden files (dotfiles)
+- `I` (Shift+i) - Toggle git-ignored files (files in .gitignore)
 - `R` - Refresh tree
 - `?` - Show help with all keybindings
 

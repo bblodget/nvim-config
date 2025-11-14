@@ -85,6 +85,12 @@ require("lazy").setup({
                 },
                 filters = {
                     dotfiles = false,  -- Show hidden files
+                    git_ignored = false, -- Show git-ignored files
+                },
+                filesystem_watchers = {
+                    enable = true,
+                    debounce_delay = 50,  -- Delay in ms
+                    ignore_dirs = {},  -- Don't ignore any directories
                 },
             })
         end,
