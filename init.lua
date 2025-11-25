@@ -97,6 +97,31 @@ require("lazy").setup({
         end,
     },
 
+    -- aerial.nvim: Code outline / document symbols sidebar
+    {
+        "stevearc/aerial.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+            require("aerial").setup({
+                -- Position on the right (nvim-tree is on left)
+                layout = {
+                    default_direction = "right",
+                    min_width = 30,
+                },
+                -- Show all symbols by default
+                filter_kind = false,
+                -- Keymaps for navigating within aerial window
+                on_attach = function(bufnr)
+                    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr, desc = 'Previous symbol' })
+                    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr, desc = 'Next symbol' })
+                end,
+            })
+        end,
+    },
+
     -- Gitsigns: Git integration with sign column indicators
     {
         "lewis6991/gitsigns.nvim",
@@ -194,6 +219,8 @@ require("lazy").setup({
             wk.add({
                 { "<leader>e", desc = "Focus Explorer" },
                 { "<leader>E", desc = "Find File in Explorer" },
+                { "<leader>a", desc = "Toggle Outline" },
+                { "<leader>A", desc = "Toggle Outline Nav" },
                 { "<leader>t", desc = "Open Terminal" },
                 { "<leader>f", group = "Find" },
                 { "<leader>ff", desc = "Find Files" },
@@ -387,6 +414,11 @@ vim.keymap.set('n', '<C-H>', '<C-W><C-H>', { desc = 'Move to window left' })
 vim.keymap.set('n', '<F2>', ':NvimTreeToggle<CR>', { desc = 'Toggle file tree', silent = true })
 vim.keymap.set('n', '<leader>e', ':NvimTreeFocus<CR>', { desc = 'Focus file tree', silent = true })
 vim.keymap.set('n', '<leader>E', ':NvimTreeFindFile<CR>', { desc = 'Find current file in tree', silent = true })
+
+-- aerial.nvim keybindings (document outline)
+vim.keymap.set('n', '<F3>', '<cmd>AerialToggle!<CR>', { desc = 'Toggle outline', silent = true })
+vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>', { desc = 'Toggle outline', silent = true })
+vim.keymap.set('n', '<leader>A', '<cmd>AerialNavToggle<CR>', { desc = 'Toggle outline nav', silent = true })
 
 -- Terminal keybindings (toggleterm)
 vim.keymap.set('n', '<leader>t', function()
