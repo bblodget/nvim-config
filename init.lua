@@ -31,6 +31,14 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
     command = "checktime",
 })
 
+-- Set comment string for assembly files (NASM uses ;)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "asm", "nasm" },
+    callback = function()
+        vim.bo.commentstring = "; %s"
+    end,
+})
+
 -- Enable syntax highlighting
 vim.cmd('syntax on')
 
@@ -251,6 +259,9 @@ require("lazy").setup({
         "numToStr/Comment.nvim",
         config = function()
             require('Comment').setup()
+            -- Override asm comment style (default is # but NASM uses ;)
+            local ft = require('Comment.ft')
+            ft.set('asm', { '; %s', '/* %s */' })
         end,
     },
 
