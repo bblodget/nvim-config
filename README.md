@@ -146,6 +146,37 @@ pacman -Syu mingw-w64-ucrt-x86_64-neovim
   - `Esc` - Exit terminal mode (return to normal mode)
   - `Ctrl-h/j/k/l` - Navigate between terminal and editor splits
 
+#### Forth Block Editing
+
+Keybindings for editing Forth block files (1024-byte blocks):
+
+| Key | Description |
+|-----|-------------|
+| `{N}]b` | Jump forward N bytes (e.g., `800]b` jumps 800 bytes ahead) |
+| `{N}[b` | Jump backward N bytes (e.g., `100[b` jumps 100 bytes back) |
+| `Space+Bs` | Show bytes since last `--- BLOCK` marker |
+
+**Workflow for Forth blocks:**
+1. Use `\ --- BLOCK N ---` markers to separate blocks (Forth line comment)
+2. `Space+Bs` counts from the line AFTER the marker (marker doesn't eat block budget)
+3. At the start of a block, type `800]b` to see where your "soft limit" is
+4. Keep blocks under ~800-900 bytes to leave room for future edits
+5. Build tool strips markers and pads each block to 1024 bytes
+
+**Example block file (forth.fb):**
+```forth
+\ --- BLOCK 0 ---
+( Core utilities )
+: NOOP ;
+: 2+ 2 + ;
+: 2- 2 - ;
+
+\ --- BLOCK 1 ---
+( Math words )
+: SQUARE DUP * ;
+: CUBE DUP DUP * * ;
+```
+
 ### Plugins
 
 Currently configured plugins:

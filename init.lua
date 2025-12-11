@@ -469,4 +469,40 @@ vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Next buffer', silent =
 vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Previous buffer', silent = true })
 vim.keymap.set('n', '<leader>bc', ':bdelete<CR>', { desc = 'Close buffer', silent = true })
 
+-- Forth block editing keybindings
+-- Jump forward N bytes: 800]b jumps 800 bytes ahead
+vim.keymap.set('n', ']b', function()
+    local count = vim.v.count1
+    local current_byte = vim.fn.line2byte(vim.fn.line('.')) + vim.fn.col('.') - 1
+    local new_byte = current_byte + count
+    vim.cmd('goto ' .. new_byte)
+end, { desc = 'Jump forward N bytes' })
+
+-- Jump backward N bytes: 100[b jumps 100 bytes back
+vim.keymap.set('n', '[b', function()
+    local count = vim.v.count1
+    local current_byte = vim.fn.line2byte(vim.fn.line('.')) + vim.fn.col('.') - 1
+    local new_byte = math.max(1, current_byte - count)
+    vim.cmd('goto ' .. new_byte)
+end, { desc = 'Jump backward N bytes' })
+
+-- Show bytes since last block marker (--- BLOCK)
+-- Counts from the line AFTER the marker, so marker doesn't eat into block budget
+vim.keymap.set('n', '<leader>Bs', function()
+    local current_byte = vim.fn.line2byte(vim.fn.line('.')) + vim.fn.col('.') - 1
+    local marker_line = vim.fn.search('--- BLOCK', 'bn')
+    if marker_line == 0 then
+        print('Bytes from start: ' .. current_byte)
+    else
+        -- Count from the line after the marker
+        local after_marker = vim.fn.line2byte(marker_line + 1)
+        if after_marker == -1 then
+            -- Marker is on last line, no content after
+            print('Bytes in block: 0')
+        else
+            print('Bytes in block: ' .. (current_byte - after_marker + 1))
+        end
+    end
+end, { desc = 'Show bytes since block marker' })
+
 print("Neovim config loaded! All plugins active.")
