@@ -45,6 +45,15 @@ vim.cmd('syntax on')
 -- File type detection and plugins
 vim.cmd('filetype plugin indent on')
 
+-- Forth file type detection (.fb = Forth blocks, .fs = Forth source)
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.fb", "*.fs", "*.fth", "*.4th" },
+    callback = function()
+        vim.bo.filetype = "forth"
+        vim.bo.commentstring = "\\ %s"
+    end,
+})
+
 -- Bootstrap lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -143,7 +152,15 @@ require("lazy").setup({
                     changedelete = { text = '~' },
                 },
                 current_line_blame = false,  -- Toggle with <leader>gb
+                watch_gitdir = {
+                    follow_files = true,     -- Follow files when they move
+                },
+                auto_attach = true,
+                attach_to_untracked = true,
             })
+
+            -- Keybinding to manually refresh gitsigns
+            vim.keymap.set('n', '<leader>gr', ':Gitsigns refresh<CR>', { desc = 'Refresh gitsigns' })
         end,
     },
 
