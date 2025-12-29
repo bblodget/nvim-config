@@ -137,6 +137,10 @@ pacman -Syu mingw-w64-ucrt-x86_64-neovim
 - **Auto-reload**: Files automatically reload when changed on disk
   - Triggers on: focus gained, buffer enter, cursor idle
   - Manual reload: `:checktime` or `:e`
+- **Project-local config**: Enabled via `exrc` option
+  - Create `.nvim.lua` in project root for project-specific settings
+  - Neovim prompts to trust the file on first load
+  - Example: set `colorcolumn` and `textwidth` for specific file types
 
 ### Key Mappings
 
@@ -208,6 +212,30 @@ Edit `~/.config/nvim/init.lua` to:
 - Modify key mappings
 - Adjust colorscheme settings
 - Change basic vim options
+
+### Project-Local Configuration
+
+Create a `.nvim.lua` file in any project directory for project-specific settings.
+Neovim will prompt you to trust the file on first load.
+
+**Example `.nvim.lua` for a Forth project (64-char block format):**
+```lua
+-- Project-local nvim settings
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.fs",
+  callback = function()
+    vim.opt_local.colorcolumn = "64"
+    vim.opt_local.textwidth = 64
+  end
+})
+```
+
+**Example `.nvim.lua` for a Python project:**
+```lua
+-- Use 2-space indentation for this project
+vim.opt_local.tabstop = 2
+vim.opt_local.shiftwidth = 2
+```
 
 **Reloading config after changes:**
 ```vim

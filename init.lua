@@ -5,6 +5,7 @@
 vim.g.mapleader = ' '           -- Set leader key (space is modern standard)
 
 -- Basic settings from .exrc
+vim.opt.exrc = true             -- Allow project-local .nvim.lua files
 vim.opt.number = true           -- Show line numbers
 vim.opt.autoindent = true       -- Auto indent new lines
 vim.opt.showmatch = true        -- Highlight matching brackets
