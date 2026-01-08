@@ -419,6 +419,14 @@ require("lazy").setup({
                 capabilities = capabilities,
             })
 
+            -- Forth (forth-lsp)
+            vim.lsp.config('forth_lsp', {
+                cmd = { 'forth-lsp' },
+                filetypes = { 'forth' },
+                root_dir = vim.fs.root(0, { '.git' }) or vim.fn.getcwd(),
+                capabilities = capabilities,
+            })
+
             -- Auto-attach keybindings when LSP starts
             vim.api.nvim_create_autocmd('LspAttach', {
                 callback = function(args)
@@ -428,7 +436,7 @@ require("lazy").setup({
             })
 
             -- Enable LSP for these servers
-            vim.lsp.enable({ 'clangd', 'pyright', 'ts_ls' })
+            vim.lsp.enable({ 'clangd', 'pyright', 'ts_ls', 'forth_lsp' })
         end,
     },
 })

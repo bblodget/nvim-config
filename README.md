@@ -671,6 +671,7 @@ Intelligent code features powered by language servers - autocomplete, go-to-defi
 - **C/C++** - clangd
 - **Python** - pyright
 - **JavaScript/TypeScript** - typescript-language-server
+- **Forth** - forth-lsp
 
 **Installation:**
 
@@ -688,6 +689,10 @@ sudo npm install -g pyright
 
 # JavaScript/TypeScript LSP
 sudo npm install -g typescript-language-server typescript
+
+# Forth LSP (requires Rust/Cargo)
+# Install Rust first: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo install forth-lsp
 ```
 
 **LSP Features:**
