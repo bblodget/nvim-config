@@ -147,9 +147,7 @@ pacman -Syu mingw-w64-ucrt-x86_64-neovim
 
 - **Leader key**: `Space`
 - **Window navigation**: `Ctrl-h/j/k/l` - Move between splits
-- **Terminal**: `Space+t` - Open terminal in current file's directory
-  - `Esc` - Exit terminal mode (return to normal mode)
-  - `Ctrl-h/j/k/l` - Navigate between terminal and editor splits
+- **Terminal**: Disabled (using tmux instead)
 
 #### Forth Block Editing
 
@@ -193,7 +191,7 @@ Currently configured plugins:
 5. **nvim-treesitter** - Advanced syntax highlighting and code understanding
 6. **which-key.nvim** - Keybinding helper popup menu
 7. **Comment.nvim** - Easy and smart code commenting
-8. **toggleterm.nvim** - Terminal integration for running shell commands
+8. **toggleterm.nvim** - Terminal integration (disabled - using tmux instead)
 9. **nvim-lspconfig + nvim-cmp** - Language Server Protocol with autocompletion
 10. **copilot.vim** - GitHub Copilot AI code suggestions
 
@@ -572,7 +570,11 @@ Quick and easy code commenting that understands every language.
 - Respects vim motions: `gcip` comments inside paragraph
 
 
-### toggleterm.nvim (Terminal Integration)
+### toggleterm.nvim (Terminal Integration - Disabled)
+
+**Note:** This plugin is disabled. We use tmux for terminal management instead.
+
+The documentation below is kept for reference if you want to re-enable it.
 
 Powerful terminal integration for running shell commands without leaving Neovim.
 
@@ -611,13 +613,12 @@ Powerful terminal integration for running shell commands without leaving Neovim.
 
 **Important - Git Commits:**
 - **Use `git commit -m "message"`** for commits (inline message)
-- **OR use lazygit** for a full-featured git UI (recommended - see below)
 - **Avoid `git commit`** without `-m` - interactive editors (nano/vi) conflict with Esc key
 - This is a limitation of terminal-in-editor workflows, not a bug
 
-**Using lazygit (Recommended for Git):**
+**Using lazygit (Optional - Not Currently Installed):**
 
-lazygit is a terminal-based Git UI that works perfectly in toggleterm.
+lazygit is a terminal-based Git UI. We are not currently using it, but the instructions are here for reference.
 
 1. **Install lazygit** (if not already installed):
    ```bash
@@ -628,8 +629,8 @@ lazygit is a terminal-based Git UI that works perfectly in toggleterm.
    rm lazygit lazygit.tar.gz
    ```
 
-2. **Use in toggleterm**:
-   - `Space + t` - Open terminal
+2. **Use in terminal**:
+   - Open a terminal (e.g., via tmux)
    - Type `lazygit`
    - Interactive git UI opens
 
@@ -652,11 +653,10 @@ lazygit is a terminal-based Git UI that works perfectly in toggleterm.
    - Manage branches, stashes, merges easily
 
 **Common Workflows:**
-1. **Git with lazygit**: `Space + t`, type `lazygit`, stage files, commit, push, `q` to quit
-2. **Quick git status**: `Space + t`, type `git status`, `Esc` to go back
-3. **Git commit (inline)**: `Space + t`, type `git commit -m "fix: update config"`, `Esc` when done
-4. **Run tests**: `Space + t`, run test command, watch output, `Esc` when done
-5. **Build project**: `Space + t`, run build, `Ctrl + \` to hide while it runs
+1. **Quick git status**: `Space + t`, type `git status`, `Esc` to go back
+2. **Git commit (inline)**: `Space + t`, type `git commit -m "fix: update config"`, `Esc` when done
+3. **Run tests**: `Space + t`, run test command, watch output, `Esc` when done
+4. **Build project**: `Space + t`, run build, `Ctrl + \` to hide while it runs
 
 **What NOT to do:**
 - Don't run interactive editors (nvim, vi, nano) inside the terminal

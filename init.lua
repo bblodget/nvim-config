@@ -284,26 +284,26 @@ require("lazy").setup({
         end,
     },
 
-    -- toggleterm.nvim: Better terminal integration
-    {
-        "akinsho/toggleterm.nvim",
-        version = "*",
-        config = function()
-            require("toggleterm").setup({
-                size = 15,
-                open_mapping = [[<c-\>]],
-                hide_numbers = true,
-                shade_terminals = true,
-                start_in_insert = true,  -- Start in insert mode when terminal opens
-                insert_mappings = true,   -- Allow mappings in insert mode
-                terminal_mappings = true, -- Allow mappings in terminal mode (pass keys through)
-                persist_size = true,
-                direction = "horizontal",  -- 'vertical' | 'horizontal' | 'tab' | 'float'
-                close_on_exit = true,
-                shell = vim.o.shell,
-            })
-        end,
-    },
+    -- toggleterm.nvim: Better terminal integration (disabled - using tmux instead)
+    -- {
+    --     "akinsho/toggleterm.nvim",
+    --     version = "*",
+    --     config = function()
+    --         require("toggleterm").setup({
+    --             size = 15,
+    --             open_mapping = [[<c-\>]],
+    --             hide_numbers = true,
+    --             shade_terminals = true,
+    --             start_in_insert = true,
+    --             insert_mappings = true,
+    --             terminal_mappings = true,
+    --             persist_size = true,
+    --             direction = "horizontal",
+    --             close_on_exit = true,
+    --             shell = vim.o.shell,
+    --         })
+    --     end,
+    -- },
 
     -- GitHub Copilot
     {
@@ -458,19 +458,14 @@ vim.keymap.set('n', '<F3>', '<cmd>AerialToggle!<CR>', { desc = 'Toggle outline',
 vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>', { desc = 'Toggle outline', silent = true })
 vim.keymap.set('n', '<leader>A', '<cmd>AerialNavToggle<CR>', { desc = 'Toggle outline nav', silent = true })
 
--- Terminal keybindings (toggleterm)
-vim.keymap.set('n', '<leader>t', function()
-    -- Get current file's directory
-    local dir = vim.fn.expand('%:p:h')
-    -- Open terminal in that directory
-    local Terminal = require('toggleterm.terminal').Terminal
-    local term = Terminal:new({ dir = dir })
-    term:toggle()
-end, { desc = 'Open terminal in current directory' })
-
--- Ctrl+\ also toggles terminal (built into toggleterm)
--- Esc exits terminal mode in toggleterm
-vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
+-- Terminal keybindings (toggleterm disabled - using tmux instead)
+-- vim.keymap.set('n', '<leader>t', function()
+--     local dir = vim.fn.expand('%:p:h')
+--     local Terminal = require('toggleterm.terminal').Terminal
+--     local term = Terminal:new({ dir = dir })
+--     term:toggle()
+-- end, { desc = 'Open terminal in current directory' })
+-- vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
 
 -- Gitsigns keybindings
 vim.keymap.set('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', { desc = 'Preview git hunk', silent = true })
