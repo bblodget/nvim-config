@@ -385,6 +385,9 @@ Visual git indicators and operations directly in the editor.
 - `Space + gs` - Stage hunk (stage this change)
 - `Space + gu` - Unstage hunk
 
+**Refresh:**
+- `Space + gr` - Refresh gitsigns (use after external commits, e.g., from tmux)
+
 **Tips:**
 - Indicators appear automatically as you edit
 - Only shows changes compared to git HEAD

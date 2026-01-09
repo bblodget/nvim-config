@@ -161,8 +161,11 @@ require("lazy").setup({
                 attach_to_untracked = true,
             })
 
-            -- Keybinding to manually refresh gitsigns
-            vim.keymap.set('n', '<leader>gr', ':Gitsigns refresh<CR>', { desc = 'Refresh gitsigns' })
+            -- Keybinding to manually refresh gitsigns (detach+attach works better than refresh)
+            vim.keymap.set('n', '<leader>gr', function()
+                require('gitsigns').detach()
+                require('gitsigns').attach()
+            end, { desc = 'Refresh gitsigns' })
         end,
     },
 
