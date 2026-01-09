@@ -24,6 +24,7 @@ vim.opt.visualbell = true       -- Visual bell instead of beep
 -- Show tabs and trailing spaces
 vim.opt.list = true
 vim.opt.listchars = { tab = '|-', trail = '-' }
+vim.opt.signcolumn = "yes:2"     -- Show 2 signs per line (LSP + gitsigns)
 
 -- Auto-reload files when they change on disk
 vim.opt.autoread = true

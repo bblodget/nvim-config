@@ -134,6 +134,7 @@ pacman -Syu mingw-w64-ucrt-x86_64-neovim
 - **Tabs**: 4 spaces, expanded
 - **Search**: Highlighted
 - **Visual indicators**: Tabs shown as `|-`, trailing spaces as `-`
+- **Sign column**: Shows 2 signs per line (allows both LSP diagnostics and gitsigns)
 - **Auto-reload**: Files automatically reload when changed on disk
   - Triggers on: focus gained, buffer enter, cursor idle
   - Manual reload: `:checktime` or `:e`
