@@ -308,6 +308,21 @@ require("lazy").setup({
     -- GitHub Copilot
     {
         "github/copilot.vim",
+        config = function()
+            -- Disable default Tab mapping (conflicts with nvim-cmp)
+            vim.g.copilot_no_tab_map = true
+            -- Use Ctrl-y to accept Copilot suggestions
+            vim.keymap.set('i', '<C-y>', 'copilot#Accept("\\<CR>")', {
+                expr = true,
+                replace_keycodes = false,
+                desc = 'Accept Copilot suggestion'
+            })
+            -- Alt-] and Alt-[ for next/previous suggestion (default, but explicit)
+            vim.keymap.set('i', '<M-]>', '<Plug>(copilot-next)', { desc = 'Next Copilot suggestion' })
+            vim.keymap.set('i', '<M-[>', '<Plug>(copilot-previous)', { desc = 'Previous Copilot suggestion' })
+            -- Ctrl-] to dismiss suggestion
+            vim.keymap.set('i', '<C-]>', '<Plug>(copilot-dismiss)', { desc = 'Dismiss Copilot suggestion' })
+        end,
     },
 
     -- LSP Configuration

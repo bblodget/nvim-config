@@ -821,8 +821,8 @@ As you type, Copilot suggests code completions shown as **ghost text** (grayed o
 
 **Keybindings:**
 
-- `Tab` - Accept the current suggestion
-- `Esc` - Dismiss the suggestion
+- `Ctrl-y` - Accept the current suggestion (Tab is reserved for nvim-cmp)
+- `Ctrl-]` - Dismiss the suggestion
 - `Alt-]` - Next suggestion (if multiple available)
 - `Alt-[` - Previous suggestion
 
@@ -845,14 +845,14 @@ Use `Space + lt` to toggle **everything** (LSP + completions + Copilot):
 - **Start function signatures** - Copilot will suggest the implementation
 - **Works in all languages** - Python, JavaScript, C/C++, Rust, Go, etc.
 - **Context-aware** - Uses surrounding code and file content
-- **Tab vs Enter**: Use `Tab` for Copilot, `Enter` for nvim-cmp completions
+- **Ctrl-y vs Tab/Enter**: Use `Ctrl-y` for Copilot, `Tab`/`Enter` for nvim-cmp completions
 
 **Example Workflow:**
 
 1. Write a comment: `// Function to calculate factorial`
 2. Start typing: `def factorial(`
 3. Copilot suggests the entire implementation as ghost text
-4. Press `Tab` to accept, or keep typing to ignore
+4. Press `Ctrl-y` to accept, or keep typing to ignore
 5. Refine or modify as needed
 
 **Best Practices:**
