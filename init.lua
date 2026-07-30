@@ -314,6 +314,10 @@ require("lazy").setup({
         config = function()
             -- Disable default Tab mapping (conflicts with nvim-cmp)
             vim.g.copilot_no_tab_map = true
+            -- Off for Forth: the suggestions are noise in a stack language.
+            -- Covers every BasicForth worktree and dark-star at once, with no
+            -- per-project .nvim.lua to create and trust.
+            vim.g.copilot_filetypes = { forth = false }
             -- Use Ctrl-y to accept Copilot suggestions
             vim.keymap.set('i', '<C-y>', 'copilot#Accept("\\<CR>")', {
                 expr = true,
