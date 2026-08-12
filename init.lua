@@ -188,49 +188,81 @@ require("lazy").setup({
     },
 
     -- Treesitter: Better syntax highlighting and code understanding
+    --
+    -- This is the "main" branch API. The old "master" branch was archived in
+    -- 2025; its nvim-treesitter.configs module -- ensure_installed, highlight,
+    -- indent -- no longer exists. "main" needs Neovim 0.12+ and the tree-sitter
+    -- CLI, because it generates parser C from the grammars at install time
+    -- instead of shipping it pre-generated.
     {
         "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false,        -- "main" explicitly does not support lazy-loading
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter.configs").setup({
-                -- Install parsers for these languages
-                ensure_installed = {
-                    "lua",
-                    "vim",
-                    "vimdoc",
-                    "bash",
-                    "python",
-                    "javascript",
-                    "typescript",
-                    "c",
-                    "cpp",
-                    "rust",
-                    "go",
-                    "html",
-                    "css",
-                    "json",
-                    "yaml",
-                    "markdown",
-                    "diff",
-                },
-                -- Install parsers synchronously (only applied to `ensure_installed`)
-                sync_install = false,
-                -- Automatically install missing parsers when entering buffer
-                auto_install = true,
-                highlight = {
-                    enable = true,
-                    -- Disable for very large files
-                    disable = function(lang, buf)
-                        local max_filesize = 100 * 1024 -- 100 KB
-                        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                        if ok and stats and stats.size > max_filesize then
-                            return true
+            local ts = require("nvim-treesitter")
+            ts.setup()
+
+            ts.install({          -- async, and a no-op for what is present
+                "lua",
+                "vim",
+                "vimdoc",
+                "bash",
+                "python",
+                "javascript",
+                "typescript",
+                "c",
+                "cpp",
+                "rust",
+                "go",
+                "html",
+                "css",
+                "json",
+                "yaml",
+                "markdown",
+                "diff",
+            })
+
+            -- Highlighting and indent are no longer plugin "modules" -- Neovim
+            -- provides both, and they are switched on per buffer.
+            local max_filesize = 100 * 1024
+            local available                       -- filled in on first miss
+
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function(args)
+                    local buf = args.buf
+                    local lang = vim.treesitter.language.get_lang(args.match)
+                        or args.match
+
+                    -- was highlight.disable: leave very large files alone
+                    local ok, stats =
+                        pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        return
+                    end
+
+                    -- Is a parser actually present? vim.treesitter.start()
+                    -- SUCCEEDS when one is missing -- it neither errors nor
+                    -- returns false -- so its result proves nothing, and
+                    -- branching on it makes this whole block unreachable.
+                    -- language.add() answers honestly: true when installed,
+                    -- nil when not (and nil, not an error, for a language
+                    -- that does not exist at all).
+                    if not vim.treesitter.language.add(lang) then
+                        -- Stand-in for the old auto_install: fetch a parser if
+                        -- upstream has one. Async, so it takes effect the next
+                        -- time this filetype is opened.
+                        available = available or ts.get_available()
+                        if vim.list_contains(available, lang) then
+                            ts.install({ lang })
                         end
-                    end,
-                },
-                indent = {
-                    enable = true
-                },
+                        return
+                    end
+
+                    vim.treesitter.start(buf, lang)
+                    vim.bo[buf].indentexpr =
+                        "v:lua.require'nvim-treesitter'.indentexpr()"
+                end,
             })
         end,
     },

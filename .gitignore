@@ -1,8 +1,12 @@
-# Ignore lazy.nvim plugin directory (managed by lazy.nvim)
-lazy-lock.json
+# NOTE: lazy-lock.json is deliberately NOT ignored. It pins every plugin to a
+# known commit, which is the only thing that makes a fresh clone reproduce a
+# working setup rather than resolving everything to latest. Ignoring it is how
+# the Raspberry Pi ended up on nvim-treesitter's "main" rewrite while the
+# laptop stayed on "master", which broke the config on the Pi only.
 
-# Ignore downloaded AppImages
+# Ignore downloaded AppImages and the extracted tree-sitter binary
 *.appimage
+tree-sitter-linux-*
 
 # Ignore backup files
 *.backup
