@@ -56,6 +56,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     end,
 })
 
+-- .v is always Verilog here (Neovim otherwise guesses between Coq, V and Verilog)
+vim.filetype.add({ extension = { v = "verilog" } })
+
 -- Bootstrap lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
